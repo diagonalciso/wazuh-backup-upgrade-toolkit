@@ -1,0 +1,12 @@
+[Unit]
+Description=Pull newest Wazuh backup to an off-box target (DR)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# runs on the PULLER box; set User + WZ_CONF for that host
+User=backup
+Environment=WZ_CONF=/etc/wazuh-toolkit/wz.conf
+ExecStart=/usr/local/sbin/wz-offsite-pull.sh
+Nice=10

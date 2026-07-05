@@ -1,0 +1,11 @@
+[Unit]
+Description=Wazuh cold full backup (Method A)
+After=network.target
+
+[Service]
+Type=oneshot
+Environment=WZ_CONF=/etc/wazuh-toolkit/wz.conf
+ExecStart=/usr/local/sbin/wzbackup.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

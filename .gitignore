@@ -1,0 +1,10 @@
+# never commit real config, backups, secrets
+wz.conf
+*.tar
+*.tar.sha256
+*.pem
+*.key
+wazuh-install-files*
+manifest_*.txt
+RESTORE_2*.md
+*.log

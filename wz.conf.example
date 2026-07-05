@@ -1,0 +1,34 @@
+# wz.conf — configuration for the Wazuh backup/upgrade toolkit.
+# Copy to /etc/wazuh-toolkit/wz.conf (root:root 0640) and edit. NEVER commit a real wz.conf.
+# All scripts source this file. Every value below is a placeholder — change them.
+
+# --- paths on the Wazuh server ---
+BACKUP_DIR="/var/backups/wazuh"                 # where local backup tars are written
+INSTALL_FILES="/root/wazuh-install-files.tar"   # produced by wazuh install; holds passwords + certs
+JVM_OPTIONS="/etc/wazuh-indexer/jvm.options"    # heap file to preserve across upgrades
+INDEXER_CERTS="/etc/wazuh-indexer/certs"        # root-ca.pem / admin.pem / admin-key.pem
+WAZUH_REPO_LIST="/etc/apt/sources.list.d/wazuh.list"  # apt repo file (kept disabled between upgrades)
+
+# --- state to back up (space-separated, paths RELATIVE to / ) ---
+BACKUP_PATHS="var/ossec etc/wazuh-indexer var/lib/wazuh-indexer etc/wazuh-dashboard etc/filebeat"
+# add your install-files tar too if it lives under /, e.g. root/wazuh-install-files.tar
+
+# --- retention ---
+KEEP=3                                           # how many local backup sets to keep
+
+# --- heap (re-pinned if an upgrade resets jvm.options) ---
+HEAP="4g"                                         # -Xms/-Xmx value for wazuh-indexer
+
+# --- indexer endpoint (local) ---
+INDEXER_URL="https://127.0.0.1:9200"
+
+# --- upgrade target (set before running wzupgrade.sh) ---
+TARGET_VERSION="4.14.6-1"                         # exact apt version string, e.g. 4.14.6-1
+
+# --- off-box copy (wz-offsite-pull.sh, runs on a SEPARATE box) ---
+SRC_HOST="wazuh.example.internal"                # ssh target of the Wazuh server
+SRC_USER="wazuh-admin"                           # ssh user with sudo/read on BACKUP_DIR
+SSH_KEY="$HOME/.ssh/wazuh_backup"                # ssh private key (key auth only — never inline a password)
+SRC_BACKUP_DIR="/var/backups/wazuh"              # = BACKUP_DIR on the server
+OFFSITE_DEST="/mnt/backup-target/wazuh"          # local mount on the puller box (NAS, USB, remote FS)
+OFFSITE_KEEP=3                                    # retention on the off-box target
