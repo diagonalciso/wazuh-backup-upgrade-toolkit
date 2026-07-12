@@ -1,5 +1,7 @@
 # Wazuh Backup & Upgrade Toolkit
 
+> Config-driven Bash toolkit to back up, off-site, and upgrade a single-node Wazuh stack (Debian/Ubuntu). systemd timers, safe defaults, full manual.
+
 Small, dependency-free Bash toolkit to **back up, off-site, and upgrade a single-node
 [Wazuh](https://wazuh.com/) stack** (indexer + manager + dashboard + filebeat) on
 Debian/Ubuntu (apt). Config-driven, systemd-schedulable, safe-by-default: every destructive
